@@ -1,0 +1,20 @@
+<svg width="64" height="64" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="airway_fav_grad" x1="4" y1="44" x2="44" y2="4" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <linearGradient id="airway_fav_swoop" x1="12" y1="36" x2="40" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="24" cy="24" r="22" fill="#0f172a" />
+  <circle cx="24" cy="24" r="21.5" stroke="url(#airway_fav_grad)" stroke-width="1.5" />
+
+  <path d="M 12 36 L 24 10 L 36 36 L 30 36 L 24 22 L 18 36 Z" fill="url(#airway_fav_swoop)" />
+  <path d="M 8 32 C 16 30 26 24 38 12" stroke="url(#airway_fav_grad)" stroke-width="3.5" stroke-linecap="round" />
+  <polygon points="38,12 32,15 35,18" fill="#10b981" />
+</svg>
