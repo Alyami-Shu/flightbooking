@@ -181,7 +181,7 @@ export default function BoardingPass({ booking, currencySymbol, onClose }) {
 
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#0f172a' }}>{booking.destination_code || booking.destination}</div>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--primary-cyan)', fontWeight: '700' }}>Arrival: {booking.arrival_time}</div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--primary-cyan)', fontWeight: '700' }}>Arrival: {(booking.arrival_time || '').replace(/\s*\([^\)]*\)/g, '').replace(/\s*\+[0-9]+d/gi, '').trim()}</div>
                 </div>
               </div>
             )}

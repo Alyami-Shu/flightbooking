@@ -87,7 +87,7 @@ export default function FlightCard({ flight, cabinClass, currency, currencyRate,
           {/* Arrival */}
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)' }}>
-              {flight.arrival_time}
+              {(flight.arrival_time || '').replace(/\s*\([^\)]*\)/g, '').replace(/\s*\+[0-9]+d/gi, '').trim()}
             </div>
             <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--primary-cyan)' }}>
               {flight.destination_code}

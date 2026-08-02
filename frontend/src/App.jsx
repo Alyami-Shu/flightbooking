@@ -10,7 +10,8 @@ import { FlightHotelStep2HotelSelection, HotelsSection, CarsSection } from './co
 import { ExploreView, PlanView, ExperienceView, LoyaltyView, SupportView, OffersAndPackagesSection } from './components/TabViews';
 import { fetchAirports, searchFlights, lookupBooking } from './api';
 import AirlineLogo from './components/AirlineLogo';
-import { AlertCircle, ShieldCheck, HeartHandshake, Phone, Mail, Plane, Search, Ticket, CheckCircle2, ChevronDown, ChevronUp, Printer, Trash2, ArrowRight, Hotel, Car, MapPin, Calendar, Clock, X } from 'lucide-react';
+import ConfidenceGuarantee from './components/ConfidenceGuarantee';
+import { AlertCircle, ShieldCheck, HeartHandshake, Phone, Mail, Plane, Search, Ticket, CheckCircle2, ChevronDown, ChevronUp, Printer, Trash2, ArrowRight, Hotel, Car, MapPin, Calendar, Clock, X, Briefcase } from 'lucide-react';
 
 export default function App() {
   const [currency, setCurrency] = useState('USD');
@@ -272,7 +273,7 @@ export default function App() {
             {/* SPLIT-SCREEN DASHBOARD LAYOUT */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'minmax(340px, 380px) 1fr',
+              gridTemplateColumns: 'minmax(420px, 460px) 1fr',
               gap: '28px',
               alignItems: 'start'
             }}>
@@ -316,20 +317,24 @@ export default function App() {
               <div id="right-side-results" style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
                 
                 {/* 1. ALWAYS VISIBLE MY BOOKINGS DASHBOARD PANEL */}
-                <div id="my-bookings-panel" className="glass-panel" style={{ padding: '24px', background: '#ffffff', border: '2px solid #0284c7', borderRadius: '18px' }}>
+                <div id="my-bookings-panel" style={{ 
+                  padding: '28px', 
+                  background: '#F0F8FF', 
+                  borderRadius: '24px', 
+                  color: '#0f172a',
+                  boxShadow: '0 12px 32px rgba(15, 23, 42, 0.06)',
+                  border: '1px solid #cbd5e1'
+                }}>
                   
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', borderBottom: '1px solid #e2e8f0', paddingBottom: '14px', flexWrap: 'wrap', gap: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.1)', color: 'var(--primary-cyan)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Ticket size={20} />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', borderBottom: '1px solid #cbd5e1', paddingBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Ticket size={22} />
                       </div>
                       <div>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a' }}>
+                        <h3 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#0f172a', letterSpacing: '-0.3px', margin: 0 }}>
                           My Active Bookings & Boarding Passes ({activeBookings.length})
                         </h3>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '600' }}>
-                          Confirmed flight, package, hotel, and car reservations display here in real-time.
-                        </p>
                       </div>
                     </div>
 
@@ -337,37 +342,58 @@ export default function App() {
                     <form onSubmit={handlePnrLookup} style={{ display: 'flex', gap: '8px' }}>
                       <input
                         type="text"
-                        className="custom-input"
-                        placeholder="Enter Reference (e.g. HTL-AW-829102)"
-                        style={{ height: '38px', fontSize: '0.8rem', width: '230px' }}
+                        placeholder="Enter Reference (e.g. AW-829102)"
+                        style={{ 
+                          height: '40px', 
+                          fontSize: '0.82rem', 
+                          width: '230px',
+                          background: '#ffffff',
+                          border: '1px solid #cbd5e1',
+                          borderRadius: '10px',
+                          color: '#0f172a',
+                          padding: '0 12px'
+                        }}
                         value={lookupPnrQuery}
                         onChange={(e) => setLookupPnrQuery(e.target.value)}
                       />
-                      <button type="submit" className="btn-secondary" style={{ height: '38px', fontSize: '0.8rem', padding: '0 12px' }}>
+                      <button 
+                        type="submit" 
+                        style={{ 
+                          height: '40px', 
+                          fontSize: '0.82rem', 
+                          padding: '0 16px',
+                          background: '#0284c7',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '10px',
+                          fontWeight: '800',
+                          cursor: 'pointer'
+                        }}
+                      >
                         {isLookupLoading ? '...' : 'Find'}
                       </button>
                     </form>
                   </div>
 
                   {lookupError && (
-                    <div style={{ background: '#fee2e2', border: '1px solid #ef4444', color: '#b91c1c', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.8rem', fontWeight: '700' }}>
+                    <div style={{ background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#fca5a5', padding: '10px 14px', borderRadius: '10px', marginBottom: '20px', fontSize: '0.82rem', fontWeight: '700' }}>
                       {lookupError}
                     </div>
                   )}
 
                   {/* Booking Cards Stack */}
                   {activeBookings.length === 0 ? (
-                    <div style={{ padding: '24px', textAlign: 'center', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1' }}>
-                      <Ticket size={32} color="var(--primary-cyan)" style={{ marginBottom: '8px' }} />
-                      <h4 style={{ fontSize: '0.95rem', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
+                    <div style={{ padding: '36px', textAlign: 'center', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '16px', border: '1px dashed rgba(255, 255, 255, 0.15)' }}>
+                      <Ticket size={36} color="#38bdf8" style={{ marginBottom: '10px' }} />
+                      <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#ffffff', marginBottom: '6px' }}>
                         No Active Bookings Yet
                       </h4>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-sub)' }}>
-                        Confirm a flight, package, hotel, or car rental to view your instant travel documents here.
+                      <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: 0 }}>
+                        Confirm a flight, travel package, hotel, or car rental to access instant boarding passes here.
                       </p>
                     </div>
                   ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                       {activeBookings.map((b) => {
                         const isHotel = b.is_hotel || b.type === 'Hotel Reservation';
                         const isCar = b.is_car || b.type === 'Car Rental';
@@ -378,44 +404,56 @@ export default function App() {
                               key={b.pnr_code}
                               style={{
                                 background: '#ffffff',
-                                border: '2px solid #0284c7',
-                                borderRadius: '16px',
-                                padding: '20px',
+                                border: '1px solid #cbd5e1',
+                                borderRadius: '18px',
+                                padding: '24px',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '14px',
-                                boxShadow: '0 4px 14px rgba(15, 23, 42, 0.05)'
+                                gap: '18px',
+                                boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)'
                               }}
                             >
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.1)', color: 'var(--primary-cyan)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <Hotel size={22} />
                                   </div>
                                   <div>
-                                    <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a' }}>
+                                    <div style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a' }}>
                                       {b.hotel_name || b.hotelName}
                                     </div>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-sub)', fontWeight: '600', marginTop: '2px' }}>
-                                      Guest: <strong>{b.passenger_name || b.guestName}</strong> • Room: <strong>{b.hotel_room || b.roomType || '5-Star Suite'}</strong>
+                                    <div style={{ fontSize: '0.82rem', color: '#475569', fontWeight: '500', marginTop: '2px' }}>
+                                      Guest: <strong style={{ color: '#0f172a' }}>{b.passenger_name || b.guestName}</strong> • Room: <strong style={{ color: '#0284c7' }}>{b.hotel_room || b.roomType || '5-Star Suite'}</strong>
                                     </div>
                                   </div>
                                 </div>
 
                                 <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '12px' }}>
                                   <div>
-                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-sub)', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '0.5px' }}>
+                                    <span style={{ fontSize: '0.68rem', color: '#64748b', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '0.5px' }}>
                                       HOTEL REF
                                     </span>
-                                    <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--primary-cyan)', letterSpacing: '1px' }}>
+                                    <div style={{ fontSize: '1.3rem', fontWeight: '900', color: '#0284c7', letterSpacing: '1px' }}>
                                       {b.pnr_code}
                                     </div>
                                   </div>
 
                                   <button
                                     onClick={() => setActiveBoardingPassModal(b)}
-                                    className="btn-secondary"
-                                    style={{ height: '38px', fontSize: '0.8rem', padding: '0 14px' }}
+                                    style={{
+                                      height: '40px',
+                                      padding: '0 16px',
+                                      background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                                      color: '#ffffff',
+                                      border: 'none',
+                                      borderRadius: '10px',
+                                      fontWeight: '800',
+                                      fontSize: '0.82rem',
+                                      cursor: 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '6px'
+                                    }}
                                   >
                                     <Printer size={15} /> Hotel Voucher
                                   </button>
@@ -431,27 +469,27 @@ export default function App() {
                               </div>
 
                               {/* HOTEL CHECK-IN & CHECK-OUT TIMINGS GRID */}
-                              <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                              <div style={{ background: '#f8fafc', padding: '18px 20px', borderRadius: '14px', border: '1px solid #e2e8f0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                 <div>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Check-In Date & Time
                                   </div>
-                                  <div style={{ fontSize: '1rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '1.05rem', color: '#0f172a', fontWeight: '900', marginTop: '3px' }}>
                                     {b.check_in_full || `${b.check_in_date || '2026-08-05'} at ${b.check_in_time || '15:00 PM'}`}
                                   </div>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--primary-cyan)', fontWeight: '700', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: '600', marginTop: '4px' }}>
                                     📍 Location: {b.hotel_location || b.hotel_city || b.route}
                                   </div>
                                 </div>
 
                                 <div style={{ textAlign: 'right' }}>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Check-Out Date & Time
                                   </div>
-                                  <div style={{ fontSize: '1rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '1.05rem', color: '#0f172a', fontWeight: '900', marginTop: '3px' }}>
                                     {b.check_out_full || `${b.check_out_date || '2026-08-10'} at ${b.check_out_time || '11:00 AM'}`}
                                   </div>
-                                  <span style={{ background: '#d1fae5', border: '1px solid #a7f3d0', color: '#059669', padding: '2px 8px', borderRadius: '8px', fontSize: '0.7rem', fontWeight: '800', display: 'inline-block', marginTop: '4px' }}>
+                                  <span style={{ background: '#dcfce7', color: '#15803d', border: '1px solid #bbf7d0', padding: '3px 10px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: '800', display: 'inline-block', marginTop: '6px' }}>
                                     {b.status || 'Hotel Confirmed'}
                                   </span>
                                 </div>
@@ -466,44 +504,56 @@ export default function App() {
                               key={b.pnr_code}
                               style={{
                                 background: '#ffffff',
-                                border: '2px solid #0284c7',
-                                borderRadius: '16px',
-                                padding: '20px',
+                                border: '1px solid #cbd5e1',
+                                borderRadius: '18px',
+                                padding: '24px',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '14px',
-                                boxShadow: '0 4px 14px rgba(15, 23, 42, 0.05)'
+                                gap: '18px',
+                                boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)'
                               }}
                             >
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.1)', color: 'var(--primary-cyan)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <Car size={22} />
                                   </div>
                                   <div>
-                                    <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a' }}>
+                                    <div style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a' }}>
                                       {b.car_name || b.carName}
                                     </div>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-sub)', fontWeight: '600', marginTop: '2px' }}>
-                                      Driver: <strong>{b.passenger_name || b.driverName}</strong>
+                                    <div style={{ fontSize: '0.82rem', color: '#475569', fontWeight: '500', marginTop: '2px' }}>
+                                      Driver: <strong style={{ color: '#0f172a' }}>{b.passenger_name || b.driverName}</strong>
                                     </div>
                                   </div>
                                 </div>
 
                                 <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '12px' }}>
                                   <div>
-                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-sub)', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '0.5px' }}>
+                                    <span style={{ fontSize: '0.68rem', color: '#64748b', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '0.5px' }}>
                                       CAR RENTAL REF
                                     </span>
-                                    <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--primary-cyan)', letterSpacing: '1px' }}>
+                                    <div style={{ fontSize: '1.3rem', fontWeight: '900', color: '#0284c7', letterSpacing: '1px' }}>
                                       {b.pnr_code}
                                     </div>
                                   </div>
 
                                   <button
                                     onClick={() => setActiveBoardingPassModal(b)}
-                                    className="btn-secondary"
-                                    style={{ height: '38px', fontSize: '0.8rem', padding: '0 14px' }}
+                                    style={{
+                                      height: '40px',
+                                      padding: '0 16px',
+                                      background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                                      color: '#ffffff',
+                                      border: 'none',
+                                      borderRadius: '10px',
+                                      fontWeight: '800',
+                                      fontSize: '0.82rem',
+                                      cursor: 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '6px'
+                                    }}
                                   >
                                     <Printer size={15} /> Rental Voucher
                                   </button>
@@ -519,27 +569,27 @@ export default function App() {
                               </div>
 
                               {/* CAR PICKUP & DROP-OFF TIMINGS GRID */}
-                              <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                              <div style={{ background: '#f8fafc', padding: '18px 20px', borderRadius: '14px', border: '1px solid #e2e8f0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                 <div>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Pickup Date, Time & Desk
                                   </div>
-                                  <div style={{ fontSize: '1rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '1.05rem', color: '#0f172a', fontWeight: '900', marginTop: '3px' }}>
                                     {b.pickup_full || `${b.pickup_date || '2026-08-05'} at ${b.pickup_time || '09:00 AM'}`}
                                   </div>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--primary-cyan)', fontWeight: '700', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: '600', marginTop: '4px' }}>
                                     📍 Pickup: {b.pickup_location || b.pickup || 'Airport Arrival Terminal Desk'}
                                   </div>
                                 </div>
 
                                 <div style={{ textAlign: 'right' }}>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Return Date, Time & Desk
                                   </div>
-                                  <div style={{ fontSize: '1rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '1.05rem', color: '#0f172a', fontWeight: '900', marginTop: '3px' }}>
                                     {b.return_full || `${b.return_date || '2026-08-10'} at ${b.return_time || '17:00 PM'}`}
                                   </div>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '700', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: '600', marginTop: '4px' }}>
                                     📍 Return: {b.dropoff_location || 'Airport Return Desk'}
                                   </div>
                                 </div>
@@ -548,11 +598,13 @@ export default function App() {
                           );
                         }
 
-                        // Default Flight & Flight + Hotel Package Card
+                        // Default Flight & Travel Package Card
                         const origCode = b.origin_code || 'ATL';
                         const destCode = b.destination_code || 'DXB';
                         const origCity = getCityName(origCode, b.origin);
                         const destCity = getCityName(destCode, b.destination);
+                        const cleanArrivalTime = (b.arrival_time || '').replace(/\s*\([^\)]*\)/g, '').replace(/\s*\+[0-9]+d/gi, '').trim();
+                        const durationText = b.duration || '14h 35m';
 
                         return (
                           <div
@@ -560,42 +612,56 @@ export default function App() {
                             style={{
                               background: '#ffffff',
                               border: b.is_package ? '2px solid #0284c7' : '1px solid #cbd5e1',
-                              borderRadius: '16px',
-                              padding: '20px',
+                              borderRadius: '18px',
+                              padding: '24px',
                               display: 'flex',
                               flexDirection: 'column',
-                              gap: '16px',
-                              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.05)'
+                              gap: '18px',
+                              boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)'
                             }}
                           >
-                            {/* Header Row: Airline Logo, Airline Name, Passenger Info & PNR */}
+                            {/* Header Row: Airline Logo, Airline Name (Bold #0f172a), Flight Number & Top-Right PNR Badge */}
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                                 <AirlineLogo code={b.airline_code || 'AW'} size={44} />
                                 <div>
-                                  <div style={{ fontSize: '1.05rem', fontWeight: '800', color: '#0f172a' }}>
-                                    {b.airline} ({b.flight_number})
-                                  </div>
-                                  <div style={{ fontSize: '0.8rem', color: 'var(--text-sub)', fontWeight: '600', marginTop: '2px' }}>
-                                    Passenger: <strong>{b.passenger_name}</strong> • Seat: <strong>{b.seat_number || '18A'}</strong> ({b.cabin_class || 'Economy'})
+                                  <h4 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0f172a', margin: 0, letterSpacing: '-0.2px' }}>
+                                    {b.airline}
+                                  </h4>
+                                  <div style={{ fontSize: '0.82rem', color: '#475569', fontWeight: '600', marginTop: '2px' }}>
+                                    Flight <strong style={{ color: '#0284c7', fontWeight: '800' }}>{b.flight_number}</strong> • Passenger: <strong style={{ color: '#0f172a' }}>{b.passenger_name}</strong> • Seat: <strong style={{ color: '#0284c7' }}>{b.seat_number || '18A'}</strong> ({b.cabin_class || 'Economy'})
                                   </div>
                                 </div>
                               </div>
 
                               <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <div>
-                                  <span style={{ fontSize: '0.7rem', color: 'var(--text-sub)', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '0.5px' }}>
+                                {/* Top-Right PNR Reference Badge */}
+                                <div style={{ background: '#f0f9ff', border: '1px solid #bae6fd', padding: '5px 12px', borderRadius: '10px', textAlign: 'right' }}>
+                                  <span style={{ fontSize: '0.62rem', color: '#0369a1', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '0.5px', display: 'block' }}>
                                     {b.is_package ? 'PACKAGE PNR' : 'FLIGHT PNR'}
                                   </span>
-                                  <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--primary-cyan)', letterSpacing: '1px' }}>
+                                  <div style={{ fontSize: '1.2rem', fontWeight: '900', color: '#0284c7', letterSpacing: '1px', lineHeight: '1.2' }}>
                                     {b.pnr_code}
                                   </div>
                                 </div>
 
                                 <button
                                   onClick={() => setActiveBoardingPassModal(b)}
-                                  className="btn-secondary"
-                                  style={{ height: '38px', fontSize: '0.8rem', padding: '0 14px' }}
+                                  style={{
+                                    height: '40px',
+                                    padding: '0 16px',
+                                    background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                                    color: '#ffffff',
+                                    border: 'none',
+                                    borderRadius: '10px',
+                                    fontWeight: '800',
+                                    fontSize: '0.82rem',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
+                                  }}
                                 >
                                   <Printer size={15} /> Boarding Pass
                                 </button>
@@ -610,48 +676,48 @@ export default function App() {
                               </div>
                             </div>
 
-                            {/* PERFECTLY CENTERED ARROW & PROMINENT IATA CODES */}
+                            {/* PROMINENT 28PX+ IATA CODES & ROUTE VISUALIZATION */}
                             <div style={{
                               background: '#f8fafc',
                               padding: '20px 24px',
-                              borderRadius: '14px',
-                              border: '1px solid #cbd5e1',
+                              borderRadius: '16px',
+                              border: '1px solid #e2e8f0',
                               display: 'flex',
                               flexDirection: 'column',
                               gap: '16px'
                             }}>
-                              {/* Top Row: Departure (Left), Centered Arrow (Middle), Destination (Right) */}
+                              {/* Top Row: Departure Code (Left 28px+), Arrow (Center), Destination Code (Right 28px+) */}
                               <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '16px' }}>
                                 
                                 {/* Left: Departure Code & City */}
                                 <div style={{ textAlign: 'left' }}>
-                                  <div style={{ fontSize: '2.1rem', fontWeight: '900', color: '#0f172a', letterSpacing: '1px', lineHeight: '1' }}>
+                                  <div style={{ fontSize: '2.2rem', fontWeight: '900', color: '#0f172a', letterSpacing: '1px', lineHeight: '1' }}>
                                     {origCode}
                                   </div>
                                   {origCity && (
-                                    <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--primary-cyan)', marginTop: '4px' }}>
+                                    <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#0284c7', marginTop: '4px' }}>
                                       {origCity}
                                     </div>
                                   )}
                                 </div>
 
-                                {/* Center: Perfectly Centered Arrow */}
+                                {/* Center: Route Indicator & Status Badge */}
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 12px' }}>
-                                  <span style={{ fontSize: '1.8rem', color: 'var(--primary-cyan)', fontWeight: '900', lineHeight: '1' }}>
+                                  <span style={{ fontSize: '1.8rem', color: '#0284c7', fontWeight: '900', lineHeight: '1' }}>
                                     →
                                   </span>
-                                  <span style={{ background: '#d1fae5', border: '1px solid #a7f3d0', color: '#059669', padding: '2px 8px', borderRadius: '10px', fontSize: '0.7rem', fontWeight: '800', marginTop: '4px' }}>
+                                  <span style={{ background: '#dcfce7', color: '#15803d', border: '1px solid #bbf7d0', padding: '3px 10px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: '800', marginTop: '6px' }}>
                                     {b.status || 'CONFIRMED'}
                                   </span>
                                 </div>
 
                                 {/* Right: Destination Code & City */}
                                 <div style={{ textAlign: 'right' }}>
-                                  <div style={{ fontSize: '2.1rem', fontWeight: '900', color: '#0f172a', letterSpacing: '1px', lineHeight: '1' }}>
+                                  <div style={{ fontSize: '2.2rem', fontWeight: '900', color: '#0f172a', letterSpacing: '1px', lineHeight: '1' }}>
                                     {destCode}
                                   </div>
                                   {destCity && (
-                                    <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--primary-cyan)', marginTop: '4px' }}>
+                                    <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#0284c7', marginTop: '4px' }}>
                                       {destCity}
                                     </div>
                                   )}
@@ -659,50 +725,58 @@ export default function App() {
 
                               </div>
 
-                              {/* Departure and Arrival Schedule Labels */}
+                              {/* Schedule Grid: Departure | Duration | Arrival */}
                               <div style={{
                                 display: 'grid',
-                                gridTemplateColumns: '1fr 1fr',
+                                gridTemplateColumns: '1fr 1fr 1fr',
+                                alignItems: 'center',
                                 gap: '16px',
                                 paddingTop: '14px',
                                 borderTop: '1px dashed #cbd5e1'
                               }}>
-                                {/* Departure */}
                                 <div>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                                    Departure
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                    Departure Time
                                   </div>
-                                  <div style={{ fontSize: '1.25rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
+                                  <div style={{ fontSize: '1.15rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
                                     {b.departure_time}
                                   </div>
                                 </div>
 
-                                {/* Arrival */}
-                                <div style={{ textAlign: 'right' }}>
-                                  <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                                    Arrival
+                                <div style={{ textAlign: 'center' }}>
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                    Duration
                                   </div>
-                                  <div style={{ fontSize: '1.25rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
-                                    {b.arrival_time}
+                                  <div style={{ fontSize: '0.95rem', color: '#0284c7', fontWeight: '800', marginTop: '2px' }}>
+                                    {durationText}
+                                  </div>
+                                </div>
+
+                                <div style={{ textAlign: 'right' }}>
+                                  <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                    Arrival Time
+                                  </div>
+                                  <div style={{ fontSize: '1.15rem', color: '#0f172a', fontWeight: '900', marginTop: '2px' }}>
+                                    {cleanArrivalTime}
                                   </div>
                                 </div>
                               </div>
 
-                              {/* COMBINED HOTEL PACKAGE FOOTER CARD IF PACKAGE BOOKING */}
+                              {/* BUNDLED HOTEL PACKAGE FOOTER */}
                               {b.is_package && (
-                                <div style={{ background: '#f0f9ff', border: '1px solid #7dd3fc', padding: '12px 16px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '4px' }}>
-                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <Hotel size={18} color="var(--primary-cyan)" />
+                                <div style={{ background: '#f0f9ff', border: '1px solid #bae6fd', padding: '12px 16px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '4px' }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <Hotel size={18} color="#0284c7" />
                                     <div>
                                       <div style={{ fontSize: '0.85rem', fontWeight: '800', color: '#0f172a' }}>
                                         🏨 Bundled Hotel: {b.hotel_name}
                                       </div>
-                                      <div style={{ fontSize: '0.75rem', color: 'var(--text-sub)', fontWeight: '600' }}>
+                                      <div style={{ fontSize: '0.75rem', color: '#475569', fontWeight: '500' }}>
                                         Location: {b.hotel_city} • Room: {b.hotel_room} (5-Star)
                                       </div>
                                     </div>
                                   </div>
-                                  <span style={{ fontSize: '0.75rem', background: '#0284c7', color: '#ffffff', padding: '2px 8px', borderRadius: '6px', fontWeight: '800' }}>
+                                  <span style={{ fontSize: '0.72rem', background: '#0284c7', color: '#ffffff', padding: '3px 10px', borderRadius: '8px', fontWeight: '800' }}>
                                     Included
                                   </span>
                                 </div>
@@ -798,8 +872,8 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* Option B: FLIGHT + HOTEL TAB SELECTED (FLIGHTS FIRST, HOTELS AFTER FLIGHTS) */}
-                  {productType === 'Flight + Hotel' && (
+                  {/* Option B: TRAVEL PACKAGES TAB SELECTED (FLIGHTS FIRST, HOTELS AFTER FLIGHTS) */}
+                  {(productType === 'Travel Packages' || productType === 'Flight + Hotel') && (
                     <div>
                       {flightHotelStep === 1 ? (
                         <div id="flight-results">
@@ -940,6 +1014,9 @@ export default function App() {
 
                 {/* Homepage Offers & Packages Section */}
                 <OffersAndPackagesSection />
+
+                {/* AirwAy Confidence Guarantee Trust & Loyalty Section */}
+                <ConfidenceGuarantee />
 
               </div>
 
@@ -1241,6 +1318,32 @@ function ThankYouConfirmationModal({ confirmation, onClose, onViewBooking, onOpe
               </div>
             </div>
           )}
+        </div>
+
+        {/* EXCLUSIVE NEXT BOOKING REWARD OFFER */}
+        <div style={{
+          background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+          border: '1px solid #bae6fd',
+          borderRadius: '14px',
+          padding: '14px 18px',
+          textAlign: 'left',
+          marginBottom: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          justify: 'space-between',
+          gap: '12px'
+        }}>
+          <div>
+            <div style={{ fontSize: '0.72rem', color: '#0369a1', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              🎁 Exclusive Reward Offer for Future Travel
+            </div>
+            <div style={{ fontSize: '0.9rem', fontWeight: '900', color: '#0f172a', marginTop: '2px' }}>
+              Enjoy 15% OFF your next AirwAy booking!
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#475569', fontWeight: '600', marginTop: '2px' }}>
+              Use promo code: <strong style={{ color: '#0284c7', background: '#ffffff', padding: '2px 6px', borderRadius: '4px', border: '1px solid #bae6fd' }}>AIRWAY15</strong>
+            </div>
+          </div>
         </div>
 
         {/* Action CTAs */}

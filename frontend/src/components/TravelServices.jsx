@@ -233,9 +233,9 @@ function CombinedPackageCheckoutModal({ flight, hotel, currencySymbol, currencyR
 
     const packageBooking = {
       pnr_code: combinedPnr,
-      type: 'Flight + Hotel Package',
+      type: 'Travel Package',
       is_package: true,
-      status: 'Flight + Hotel Confirmed',
+      status: 'Travel Package Confirmed',
       passenger_name: name,
       passenger_email: email,
       passenger_phone: phone,
@@ -284,7 +284,7 @@ function CombinedPackageCheckoutModal({ flight, hotel, currencySymbol, currencyR
               Combined Package Transaction
             </span>
             <h3 style={{ fontSize: '1.25rem', fontWeight: '900', marginTop: '4px' }}>
-              Confirm Flight + Hotel Package
+              Confirm Travel Package
             </h3>
           </div>
           <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', cursor: 'pointer' }}>
@@ -309,7 +309,7 @@ function CombinedPackageCheckoutModal({ flight, hotel, currencySymbol, currencyR
                 {flight.airline} ({flight.flight_number})
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-sub)', marginTop: '2px' }}>
-                Departure: <strong>{flight.departure_time}</strong> | Arrival: <strong>{flight.arrival_time}</strong>
+                Departure: <strong>{flight.departure_time}</strong> | Arrival: <strong>{(flight.arrival_time || '').replace(/\s*\([^\)]*\)/g, '').replace(/\s*\+[0-9]+d/gi, '').trim()}</strong>
               </div>
             </div>
 

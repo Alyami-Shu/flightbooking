@@ -177,7 +177,7 @@ export default function BookingModal({ flight, cabinClass, currencyRate, currenc
               </div>
 
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a' }}>{flight.arrival_time}</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a' }}>{(flight.arrival_time || '').replace(/\s*\([^\)]*\)/g, '').replace(/\s*\+[0-9]+d/gi, '').trim()}</div>
                 <div style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--primary-cyan)' }}>{flight.destination_code} ({flight.destination})</div>
               </div>
             </div>
