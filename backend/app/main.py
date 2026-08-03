@@ -8,7 +8,7 @@ import random
 import string
 from datetime import datetime
 
-from database import get_db, init_db
+from app.database import get_db, init_db
 
 app = FastAPI(title="AirwAy API", version="1.0.0")
 
